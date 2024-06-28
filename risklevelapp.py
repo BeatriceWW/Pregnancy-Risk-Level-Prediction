@@ -41,7 +41,7 @@ def main():
 
     #get input from user 
     Age = st.text_input('Age (in years)')
-    Body_Temperature = st.text_input('Body Temperature (in °C)')
+    Body_Temperature = st.text_input('Body Temperature (in °F)')
     Heart_Rate = st.text_input('Heart Rate (beats per minute)')
     Systolic_Blood_Pressure = st.text_input('Systolic Blood Pressure (mmHg)')
     Diastolic_Blood_Pressure = st.text_input('Diastolic Blood Pressure (mmHg)')
