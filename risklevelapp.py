@@ -2,9 +2,9 @@ import numpy as np
 import streamlit as st 
 import pickle
 
-
 #Load saved model 
 loaded_model = pickle.load(open('trained_model.sav', 'rb')) 
+
 
 #Create a prediction function 
 def risk_level_prediction(input_data):
@@ -33,27 +33,41 @@ def main():
     # Add title to web interface
     st.title('Pregnancy Risk Level Prediction')
 
+    # Add instructions for users
+    st.write("""
+    Welcome to the Pregnancy Risk Level Prediction tool. 
+    Please enter the following details:
+    """)
+
     #get input from user 
-    Age = st.text_input('Age')
-    Body_Temperature = st.text_input('Body Temperature')
-    Heart_Rate = st.text_input('Heart Rate')
-    Systolic_Blood_Pressure = st.text_input('Systolic Blood Pressure')
-    Diastolic_Blood_Pressure = st.text_input('Diastolic  BloodPressure')
-    BMI = st.text_input('BMI')
-    Blood_Glucose_HbA1c = st.text_input('Blood Glucose HbA1c')
-    Blood_Glucose_Fasting = st.text_input('Blood Glucose Fasting')
+    Age = st.text_input('Age (in years)')
+    Body_Temperature = st.text_input('Body Temperature (in °C)')
+    Heart_Rate = st.text_input('Heart Rate (beats per minute)')
+    Systolic_Blood_Pressure = st.text_input('Systolic Blood Pressure (mmHg)')
+    Diastolic_Blood_Pressure = st.text_input('Diastolic Blood Pressure (mmHg)')
+    BMI = st.text_input('BMI (kg/m²)')
+    Blood_Glucose_HbA1c = st.text_input('Blood Glucose HbA1c (%)')
+    Blood_Glucose_Fasting = st.text_input('Blood Glucose Fasting (mg/dL)')
+
+    # Add a note about entering numerical values
+    st.write("""
+    Note: Please enter numerical values only. 
+    Ensure all fields are filled before requesting the prediction.
+    """)
+
 
     # Code for prediction 
-
-    diagnosis = ''
-
-    if st.button('Pregnancy Risk Level Result'):
-        
-        diagnosis = risk_level_prediction([Age, Body_Temperature, Heart_Rate, 
-                                   Systolic_Blood_Pressure, Diastolic_Blood_Pressure,
-                                   BMI, Blood_Glucose_HbA1c, Blood_Glucose_Fasting])
     
-    st.success(diagnosis)
+    if st.button('Get Pregnancy Risk Level Result'):
+        if all([Age, Body_Temperature, Heart_Rate, Systolic_Blood_Pressure, 
+                Diastolic_Blood_Pressure, BMI, Blood_Glucose_HbA1c, Blood_Glucose_Fasting]):
+            diagnosis = risk_level_prediction([Age, Body_Temperature, Heart_Rate, 
+                                    Systolic_Blood_Pressure, Diastolic_Blood_Pressure,
+                                    BMI, Blood_Glucose_HbA1c, Blood_Glucose_Fasting])
+        else:
+            diagnosis = "Please fill in all fields before requesting a prediction."
+    
+        st.success(diagnosis)
 
 
 if __name__ == '__main__':
